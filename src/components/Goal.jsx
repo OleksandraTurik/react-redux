@@ -11,7 +11,8 @@ import  TextField  from "@mui/material/TextField";
 
 const Goal = ({ goal }) => {
   const [edit, setEdit] = useState(false);
-  const [value, setValue] = useState('')
+  const [title, setTitle] = useState(goal.title)
+  const [description, setDescription] = useState(goal.description)
 
   const dispatch = useDispatch();
 
@@ -19,18 +20,30 @@ const Goal = ({ goal }) => {
     dispatch(deleteGoal(goal.id));
   };
 
-  const handleEdit = (goal) => {
+  const handleSave = () => {
+    console.log(title);
     const changeGoal = {
-      title: value,
+      title,
+     description,
       id: goal.id
     }
     dispatch(editGoal(changeGoal))
     setEdit(false)
   };
 
-  const handleChange = (e) => {
-    setValue(e.target.value)
+  const handleEdit = () => {
+    setEdit(true)
+    console.log(goal.id)
+  };
+
+  const handleChangeTitle = (e) => {
+    setTitle(e.target.value)
   }
+
+  const handleChangeDescription = (e) => {
+    setDescription(e.target.value)
+  }
+
 
   return (
     <Card style={{ marginTop: 10, marginBottom: 10 }}>
@@ -41,17 +54,27 @@ const Goal = ({ goal }) => {
               <TextField
                 fullwidth
                 label="Edit goal"
-                value={value}
-                onChange={handleChange}
+                value={title}
+                onChange={handleChangeTitle}
               />
-              <Button onClick={handleEdit} size="small" color="primary">
-                Save
-              </Button>
-              <Button onClick={() => setEdit(false)} size="small" color="primary">
-                Cansel
-              </Button>
+              <TextField
+                fullwidth
+                label="Edit description"
+                value={description}
+                onChange={handleChangeDescription}
+              />
+              <div>
+                <Button onClick={handleSave} size="small" color="primary">
+                  Save
+                </Button>
+                <Button onClick={() => setEdit(false)} size="small" color="primary">
+                  Cancel
+                </Button>
+              </div>
+              
             </>
           ) : (
+            <>
             <Typography
               sx={{ fontSize: 14 }}
               color="text.secondary"
@@ -59,6 +82,14 @@ const Goal = ({ goal }) => {
             >
               {goal.title}
             </Typography>
+             <Typography
+             sx={{ fontSize: 14 }}
+             color="text.secondary"
+             gutterBottom
+             >
+             {goal.description}
+           </Typography>
+            </>
           )}
         </CardContent>
       </CardActionArea>
@@ -69,8 +100,8 @@ const Goal = ({ goal }) => {
         <Button onClick={handleEdit} size="small" color="primary">
           Edit
         </Button>
-      </CardActions>
-    </Card>
+      </CardActions> 
+    </Card> 
   );
 };
 

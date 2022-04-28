@@ -1,9 +1,11 @@
 import { combineReducers, createStore } from "redux";
-import {goalsReduser} from './reducers/redusersGoal'
+import {goalsReducer} from './reducers/reducersGoal'
+import {themeReducer} from './reducers/themeReducer'
 
 
 const rootReducer = combineReducers({
-    goalsList: goalsReduser
+    goalsList: goalsReducer,
+     themeReducer
 });
 
  const store = createStore(rootReducer);

@@ -6,21 +6,28 @@ import { addGoal } from "../store/actions/actions";
 const Form = () => {
   const dispatch = useDispatch()
   const [value, setValue] = useState("");
+  const [text, setText] = useState('')
 
   const handleClick = (e) => {
     e.preventDefault();
-    if (!value) return;
+    if (!value || !text) return;
     const newGoal = {
       title: value,
+      description: text,
       id: Date.now().toString(),
     };
 
     dispatch(addGoal(newGoal))
     setValue("");
+    setText('')
   };
 
   const handleChange = (e) => {
     setValue(e.target.value);
+  };
+
+  const handleChangeDescription = (e) => {
+    setText(e.target.value);
   };
 
   return (
@@ -30,7 +37,16 @@ const Form = () => {
         label="Goal title"
         id="standart-title"
         value={value}
+        required
         onChange={handleChange}
+      />
+      <TextField
+        fullWidth
+        label="Description"
+        id="standart-title"
+        value={text}
+        required
+        onChange={handleChangeDescription}
       />
       <Button
         variant="contained"

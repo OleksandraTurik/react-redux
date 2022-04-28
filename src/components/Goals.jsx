@@ -1,7 +1,10 @@
 import React from "react";
 import Goal from "./Goal";
+import { useSelector } from "react-redux";
 
-const Goals = ({ goals }) => {
+const Goals = () => {
+  const goals = useSelector(state => state.goalsList.goals);
+  console.log(goals)
   return (
     <>
       {goals.map((goal) => (
